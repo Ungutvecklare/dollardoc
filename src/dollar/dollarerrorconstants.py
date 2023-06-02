@@ -18,28 +18,28 @@ KEY_NOT_LIST_OR_STRING = "Key {0} was not a list or string as expected"  # forma
 REQUIRED_CONFIG_NOT_PRESENT = "Required config {0} not present in the config"  # format: config name <string>
 
 # Category: File operations
-FAILED_TO_OPEN_FILE = "Failed to open file {}"  # format: file name <string>
-FAILED_TO_READ_FILE = "Failed to read file {}"  # format: file name <string>
+FAILED_TO_OPEN_FILE = "Failed to open file {0}"  # format: file name <string>
+FAILED_TO_READ_FILE = "Failed to read file {0}"  # format: file name <string>
 FILE_NOT_FOUND = "File not found: {0}"  # format: file name <string>
-COULD_NOT_WRITE_FILE = "Could not write file {}"  # format: file name <string>
+COULD_NOT_WRITE_FILE = "Could not write file {0}"  # format: file name <string>
 
 # Category: Path/File location
 INVALID_PATH_STRING = "Path passed to DollarFile must be valid string"
 INVALID_FILE_TYPE = "File Ending passed to DollarFile must be valid string"
 
 # Category: Plugin loading and execution
-BLOCK_PLUGIN_NOT_FOUND = "Block plugin with name {}, cannot be found"  # format: block name <string>
+BLOCK_PLUGIN_NOT_FOUND = "Block plugin with name {0}, cannot be found"  # format: block name <string>
 BLOCK_PLUGIN_WRONG_TYPE = "Block plugin is of wrong type"
-EXTENSION_PLUGIN_NOT_FOUND = "Extension plugin with name {}, cannot be found"  # format: extension name <string>
-FUNCTION_PLUGIN_NOT_FOUND = "Function plugin with name {}, cannot be found"  # format: function name <string>
+EXTENSION_PLUGIN_NOT_FOUND = "Extension plugin with name {0}, cannot be found"  # format: extension name <string>
+FUNCTION_PLUGIN_NOT_FOUND = "Function plugin with name {0}, cannot be found"  # format: function name <string>
 FUNCTION_PLUGIN_WRONG_TYPE = "Function plugin is of wrong type"
-NO_EXTENSION_HANDLER = "No extension plugin with handler for secondary key {}"  # format: secondary key <string>
-UNSUPPORTED_PLUGIN_TYPE = "Plugin with type {} is not supported"  # format: plugin type <string>
+NO_EXTENSION_HANDLER = "No extension plugin with handler for secondary key {0}"  # format: secondary key <string>
+UNSUPPORTED_PLUGIN_TYPE = "Plugin with type {0} is not supported"  # format: plugin type <string>
 
 # Category: Blank checks
 BLOCK_NAME_NOT_BLANK = "Block name can not be blank"
 FUNCTION_NAME_NOT_BLANK = "Function name can not be blank"
-PARAMETER_CANNOT_BE_EMPTY = "Parameter {} cannot be empty"  # format: parameter name <string>
+PARAMETER_CANNOT_BE_EMPTY = "Parameter {0} cannot be empty"  # format: parameter name <string>
 TARGET_TEXT_NOT_BLANK = "Target text can not be blank"
 TEXT_NOT_BLANK = "Text can not be blank"
 
@@ -49,8 +49,8 @@ ALREADY_PARSING_DOLLAR = "Already parsing dollar"
 # Category: Formatting
 DOLLAR_FUNCTION_NOT_FORMATED_CORRECTLY = "Dollar Function is not formatted properly"
 ERR_LIST_FIRST_ITEM = "List can not be the first item inside a List"
-ERR_UNSUPPORTED_LIST_FORMAT = "Format {} is not supported on List"  # format: format <string>
-INVALID_FORMAT = "Format {} is not supported"  # format: format <string>
+ERR_UNSUPPORTED_LIST_FORMAT = "Format {0} is not supported on List"  # format: format <string>
+INVALID_FORMAT = "Format {0} is not supported"  # format: format <string>
 INVALID_ID_STRING = "Id must be a valid string"
 INVALID_STRING = "String must be a valid string"
 UNION_CONTAINS_UNION = "Union can not contain another union"
