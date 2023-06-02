@@ -2,10 +2,8 @@ from dollar.dollarobject import DollarObject
 
 
 class DollarObjectImpl(DollarObject):
-
     def __init__(self, content, path, output_path, target_path):
         super().__init__(path, output_path, target_path)
-
         self.content = content.split("\n")
         self.header_end = 0
         self.header = None
@@ -46,11 +44,11 @@ class DollarObjectImpl(DollarObject):
         self.unparsed_header = unparsed_header
 
     def get_content_without_header(self):
-        return "\n".join(self.content[self.header_end + 1:])
+        return "\n".join(self.content[self.header_end + 1 :])
 
     def set_content_without_header(self, content_body: str):
         content_body_split = content_body.split("\n")
-        self.content = self.content[:self.header_end + 1] + content_body_split
+        self.content = self.content[: self.header_end + 1] + content_body_split
 
     def get_output(self) -> str:
         return self.output
@@ -82,13 +80,15 @@ class DollarObjectImpl(DollarObject):
     def equals(self, dollar_object):
         if not super().equals(dollar_object):
             return False
-        if self.content == None:
-            if dollar_object.content == None:
+        if self.content is None:
+            if dollar_object.content is None:
                 return True
             return False
-        if dollar_object.content == None or len(self.content) != len(dollar_object.content):
+        if dollar_object.content is None or len(self.content) != len(
+            dollar_object.content
+        ):
             return False
-        for i in range(0, len(self.content)):
+        for i in range(len(self.content)):
             self_line = self.content[i]
             do_line = dollar_object.content[i]
             if self_line != do_line:

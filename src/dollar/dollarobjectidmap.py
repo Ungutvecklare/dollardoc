@@ -3,6 +3,7 @@ import copy
 from dollar.dollarexception import DollarException
 from dollar.dollarobject import DollarObject
 from dollar.helper.validationhelper import ValidationHelper
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 
 class DollarObjectIdMapDiff:
@@ -16,15 +17,19 @@ class DollarObjectIdMapDiff:
 
 
 class DollarObjectIdMap:
-
     def __init__(self):
         self.id_map = {}
 
     def get(self, dollar_object_id: str) -> DollarObject:
         if not ValidationHelper.valid_str(dollar_object_id):
-            raise DollarException("Id must be a valid string")
+            raise DollarException(DollarErrorMessages.INVALID_ID_STRING)
         if dollar_object_id not in self.id_map:
-            raise DollarException(f"Id {dollar_object_id} does not exist")
+            raise DollarException(
+                DollarErrorMessages.DOLLAR_OBJECT_ID_DOES_NOT_EXIST.format(
+                    id=dollar_object_id
+                )
+            )
+
         return self.id_map[dollar_object_id]
 
     def has_id(self, dollar_object_id: str) -> bool:
@@ -43,20 +48,22 @@ class DollarObjectIdMap:
 
     def add(self, dollar_object: DollarObject):
         if not ValidationHelper.valid_obj(dollar_object, DollarObject):
-            raise DollarException("Object is not a valid DollarObject")
+            raise DollarException(DollarErrorMessages.INVALID_DOLLAR_OBJECT)
         dollar_object_id = dollar_object.get_id()
         if not ValidationHelper.valid_str(dollar_object_id):
-            raise DollarException("Id must be a valid string")
+            raise DollarException(DollarErrorMessages.INVALID_ID_STRING)
         if dollar_object_id in self.id_map:
-            raise DollarException(f"Id {dollar_object_id} already exists")
+            raise DollarException(
+                DollarErrorMessages.DOLLAR_OBJECT_ID_EXISTS.format(dollar_object_id)
+            )
         self.id_map[dollar_object_id] = dollar_object
 
     def add__force(self, dollar_object: DollarObject):
         if not ValidationHelper.valid_obj(dollar_object, DollarObject):
-            raise DollarException("Object is not a valid DollarObject")
+            raise DollarException(DollarErrorMessages.INVALID_DOLLAR_OBJECT)
         dollar_object_id = dollar_object.get_id()
         if not ValidationHelper.valid_str(dollar_object_id):
-            raise DollarException("Id must be a valid string")
+            raise DollarException(DollarErrorMessages.INVALID_STRING)
         self.id_map[dollar_object_id] = dollar_object
 
     def diff(self, dollar_object_id_map) -> DollarObjectIdMapDiff:
@@ -77,4 +84,6 @@ class DollarObjectIdMap:
         return DollarObjectIdMapDiff(added, changed, removed)
 
     def copy(self):
-        return copy.deepcopy(self)
+        new_map = DollarObjectIdMap()
+        new_map.id_map = copy.deepcopy(self.id_map)
+        return new_map

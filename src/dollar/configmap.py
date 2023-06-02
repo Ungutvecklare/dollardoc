@@ -1,18 +1,22 @@
 from typing import List
 
 from dollar.dollarexception import DollarException
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 
 class ConfigMap:
-
     def __init__(self, config):
         self.config = config
 
     def get(self, key):
         if type(key) == str:
-            raise DollarException("Keys must be provided in type ConfigType")
+            raise DollarException(
+                DollarErrorMessages.KEY_NOT_PROVIDED_IN_CONFIG.format(key)
+            )
         if key not in self.config:
-            raise DollarException("Key {} was not provided in config".format(key))
+            raise DollarException(
+                DollarErrorMessages.KEY_NOT_PROVIDED_IN_CONFIG.format(key)
+            )
         return self.config[key]
 
     def get_str_list(self, key) -> List[str]:
@@ -22,7 +26,9 @@ class ConfigMap:
         elif type(value) == list:
             return value
         else:
-            raise DollarException("Key {} was not list or string as expected".format(key))
+            raise DollarException(
+                DollarErrorMessages.KEY_NOT_LIST_OR_STRING.format(key)
+            )
 
     def get_str_list_opt(self, key):
         value = self.get_opt(key, [])
@@ -31,11 +37,15 @@ class ConfigMap:
         elif type(value) == list:
             return value
         else:
-            raise DollarException("Key {} was not list or string as expected".format(key))
+            raise DollarException(
+                DollarErrorMessages.KEY_NOT_LIST_OR_STRING.format(key)
+            )
 
     def get_opt(self, key, default):
         if type(key) == str:
-            raise DollarException("Keys must be provided in type ConfigType")
+            raise DollarException(
+                DollarErrorMessages.KEY_NOT_PROVIDED_IN_CONFIG.format(key)
+            )
         if key in self.config:
             return self.config[key]
         return default
@@ -50,4 +60,6 @@ class ConfigMap:
     def validate(self, required_config):
         for req in required_config:
             if req not in self.config:
-                raise DollarException("Required config {} not present in config".format(req))
+                raise DollarException(
+                    DollarErrorMessages.REQUIRED_CONFIG_NOT_PRESENT.format(req)
+                )

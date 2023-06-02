@@ -5,7 +5,7 @@ from dollar.dollarexception import DollarException
 from dollar.dollarcontext import DollarContext
 from dollar.dollarobject import DollarObject
 from dollar.dollarobjectidmap import DollarObjectIdMap
-
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 class HeaderTransformer:
 
@@ -36,7 +36,7 @@ class HeaderTransformer:
                     char = value[i]
                     if char == "$":
                         if dollar_parsing:
-                            raise DollarExecutionException("Already parsing dollar", dollar_context)
+                            raise DollarExecutionException(DollarErrorMessages.ALREADY_PARSING_DOLLAR, dollar_context)
                         dollar_parsing = True
                         dollar_start = i
                     elif dollar_parsing:
@@ -94,6 +94,6 @@ class HeaderTransformer:
     @classmethod
     def _handle_value_string_parse(cls, value, header, dollar_value, start, end, dollar_context):
         if not dollar_value.startswith("this."):
-            raise DollarExecutionException("Dollar reference can only be used locally", dollar_context)
+            raise DollarExecutionException(DollarErrorMessages.DOLLAR_REFRENCE_SCOPE_RESTRICTION, dollar_context)
         dollar_key = dollar_value.removeprefix("this.")
         return value[0:start] + header[dollar_key] + value[end + 1:]

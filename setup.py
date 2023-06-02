@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="dollardoc",
-    version="0.4.0",
+    version="0.4.1",
     description="Object oriented markdown documentation",
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -4,7 +4,7 @@ from dollar.dollarexception import DollarExecutionException
 from dollar.dollarcontext import DollarContext
 from dollar.helper.validationhelper import ValidationHelper
 from dollar.format.raw.rawdollarformattype import RawDollarFormatType
-
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 class RawDollarFormat:
 
@@ -36,7 +36,7 @@ class RawDollarFormatText(RawDollarFormat):
 
     def validate(self):
         if ValidationHelper.valid_str(self.text):
-            raise DollarExecutionException("Text can not be blank")
+            raise DollarExecutionException(DollarErrorMessages.TEXT_NOT_BLANK)
 
 
 class RawDollarFormatReference(RawDollarFormat):
@@ -50,7 +50,7 @@ class RawDollarFormatReference(RawDollarFormat):
 
     def validate(self):
         if ValidationHelper.valid_str(self.target_text):
-            raise DollarExecutionException("Target text can not be blank")
+            raise DollarExecutionException(DollarErrorMessages.TARGET_TEXT_NOT_BLANK)
 
 
 class RawDollarFormatFunction(RawDollarFormat):
@@ -68,7 +68,7 @@ class RawDollarFormatFunction(RawDollarFormat):
 
     def validate(self):
         if ValidationHelper.valid_str(self.function_name):
-            raise DollarExecutionException("Function name can not be blank")
+            raise DollarExecutionException(DollarErrorMessages.FUNCTION_NAME_NOT_BLANK)
         for param in self.parameters:
             param.validate()
 
@@ -88,7 +88,7 @@ class RawDollarFormatBlock(RawDollarFormat):
 
     def validate(self):
         if ValidationHelper.valid_str(self.block_name):
-            raise DollarExecutionException("Block name can not be blank")
+            raise DollarExecutionException(DollarErrorMessages.BLOCK_NAME_NOT_BLANK)
         self.content.validate()
 
 
@@ -104,5 +104,5 @@ class RawDollarFormatUnion(RawDollarFormat):
     def validate(self):
         for child in self.children:
             if child.get_format_type() == RawDollarFormatType.UNION:
-                raise DollarExecutionException("A union cant contain another union")
+                raise DollarExecutionException(DollarErrorMessages.UNION_CONTAINS_UNION)
             child.validate()

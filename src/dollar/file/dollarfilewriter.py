@@ -3,15 +3,16 @@ import shutil
 from typing import List
 
 from dollar.dollarexception import DollarException
+import dollar.dollarerrorconstants as DollarErrorMessages
 from dollar.file.dollarfile import DollarFile
 
 
 class DollarFileWriter:
-
     @staticmethod
     def clean_dir(target_path):
         if os.path.exists(target_path):
             shutil.rmtree(target_path)
+
     @staticmethod
     def write_files(target_path, outputs: List[DollarFile]):
         for output in outputs:
@@ -23,4 +24,6 @@ class DollarFileWriter:
                 with open(save_path, "w") as f:
                     f.write(output.get_content())
             except Exception as e:
-                raise DollarException("Could not write file {}".format(save_path)) from e
+                raise DollarException(
+                    DollarErrorMessages.COULD_NOT_WRITE_FILE.format(save_path)
+                ) from e

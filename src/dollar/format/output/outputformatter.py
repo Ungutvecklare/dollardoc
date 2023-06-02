@@ -21,6 +21,7 @@ from dollar.format.output.outputformat import OutputFormatDefinition
 from dollar.format.output.outputformat import OutputFormatPluginBlock
 from dollar.format.output.outputformat import OutputFormatDollarObject
 from dollar.format.output.outputformatdollarobjectlinktype import OutputFormatDollarObjectLinkType
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 
 class OutputFormatter:
@@ -171,7 +172,7 @@ class OutputFormatterMarkdown(OutputFormatter):
                 result = result + ")"
 
             else:
-                raise DollarExecutionException("Format {} is not supported".format(dollar_format_type))
+                raise DollarExecutionException(DollarErrorMessages.INVALID_FORMAT.format(dollar_format_type))
 
         return result
 
@@ -195,7 +196,7 @@ class OutputFormatterMarkdown(OutputFormatter):
             elif dollar_format_type == OutputFormatType.ORDERED_LIST:
                 dollar_format = cast(OutputFormatOrderedList, dollar_format)
                 if count == 1:
-                    raise DollarExecutionException("List can not be the first item inside a List")
+                    raise DollarExecutionException(DollarErrorMessages.ERR_LIST_FIRST_ITEM)
                 result = result + "\n" + self.format_list(
                         this_dollar_object,
                         dollar_format.get_children(),
@@ -205,7 +206,7 @@ class OutputFormatterMarkdown(OutputFormatter):
             elif dollar_format_type == OutputFormatType.UNORDERED_LIST:
                 dollar_format = cast(OutputFormatUnorderedList, dollar_format)
                 if count == 1:
-                    raise DollarExecutionException("List can not be the first item inside a List")
+                    raise DollarExecutionException(DollarErrorMessages.ERR_LIST_FIRST_ITEM)
                 result = result + "\n" + self.format_list(
                         this_dollar_object,
                         dollar_format.get_children(),
@@ -213,6 +214,6 @@ class OutputFormatterMarkdown(OutputFormatter):
                         context + "    ")
 
             else:
-                raise DollarExecutionException("Format {} is not supported on List".format(dollar_format_type))
+                raise DollarExecutionException(DollarErrorMessages.ERR_UNSUPORTED_LIST_FORMAT.format(dollar_format_type))
 
         return result

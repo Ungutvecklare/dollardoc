@@ -7,6 +7,7 @@ from dollar.helper.validationhelper import ValidationHelper
 from dollar.format.input.inputformattype import InputFormatType
 from dollar.plugin.dollarplugin import DollarFunctionPlugin
 from dollar.plugin.dollarplugin import DollarBlockPlugin
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 
 class InputFormat:
@@ -39,7 +40,7 @@ class InputFormatText(InputFormat):
 
     def validate(self):
         if ValidationHelper.valid_str(self.text):
-            raise DollarExecutionException("Text can not be blank", self.dollar_context)
+            raise DollarExecutionException(DollarErrorMessages.TEXT_NOT_BLANK, self.dollar_context)
 
 
 class InputFormatDollarObject(InputFormat):
@@ -53,7 +54,7 @@ class InputFormatDollarObject(InputFormat):
 
     def validate(self):
         if not isinstance(self.dollar_object, DollarObject):
-            raise DollarExecutionException("Dollar object is of wrong type", self.dollar_context)
+            raise DollarExecutionException(DollarErrorMessages.DOLLAR_OBJECT_IS_WRONG_TYPE, self.dollar_context)
 
 
 class InputFormatDollarObjectValue(InputFormatDollarObject):
@@ -90,7 +91,7 @@ class InputFormatFunction(InputFormat):
 
     def validate(self):
         if not isinstance(self.function_plugin, DollarFunctionPlugin):
-            raise DollarExecutionException("Function plugin is of wrong type", self.dollar_context)
+            raise DollarExecutionException(DollarErrorMessages.FUNCTION_PLUGIN_WRONG_TYPE, self.dollar_context)
         for param in self.parameters:
             param.validate()
 
@@ -110,7 +111,7 @@ class InputFormatBlock(InputFormat):
 
     def validate(self):
         if not isinstance(self.block_plugin, DollarBlockPlugin):
-            raise DollarExecutionException("Block plugin is of wrong type", self.dollar_context)
+            raise DollarExecutionException(DollarErrorMessages.BLOCK_PLUGIN_WRONG_TYPE, self.dollar_context)
         self.content.validate()
 
 
@@ -126,5 +127,5 @@ class InputFormatUnion(InputFormat):
     def validate(self):
         for child in self.children:
             if child.get_format_type() == InputFormatType.UNION:
-                raise DollarExecutionException("A union cant contain another union", self.dollar_context)
+                raise DollarExecutionException(DollarErrorMessages.UNION_CONTAINS_UNION, self.dollar_context)
             child.validate()
