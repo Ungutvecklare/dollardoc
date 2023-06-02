@@ -3,21 +3,22 @@ from typing import List
 from dollar.dollarexception import DollarExecutionException
 from dollar.dollarcontext import DollarContext
 from dollar.helper.validationhelper import ValidationHelper
-
+import dollar.dollarerrorconstants as DollarErrorMessages
 
 class DollarFile:
-
     def __init__(self, path, content, file_ending):
         if not ValidationHelper.valid_str(path):
             raise DollarExecutionException(
-                    "Path passed to DollarFile must be valid string",
-                    DollarContext(path, 0, 0))
+                DollarErrorMessages.INVALID_PATH_STRING,
+                DollarContext(path, 0, 0),
+            )
         if not ValidationHelper.valid_str(content):
             content = ""
         if not ValidationHelper.valid_str(file_ending):
             raise DollarExecutionException(
-                    "File Ending passed to DollarFile must be valid string",
-                    DollarContext(path, 0, 0))
+                DollarErrorMessages.INVALID_FILE_TYPE,
+                DollarContext(path, 0, 0),
+            )
         self.path = path
         self.content = content
         self.file_ending = file_ending.lower()
@@ -35,7 +36,9 @@ class DollarFile:
         return self.file_ending == file_ending_compare.lower()
 
     def is_file_ending_in(self, file_ending_compares: List[str]):
-        file_ending_compares = [file_ending.lower() for file_ending in file_ending_compares]
+        file_ending_compares = [
+            file_ending.lower() for file_ending in file_ending_compares
+        ]
         return self.file_ending in file_ending_compares
 
     def is_file_ending_in__assume_lower_case(self, file_ending_compares: List[str]):

@@ -1,11 +1,11 @@
 from setuptools import setup
 
-with open("README.md", "r") as f:
+with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
     name="dollardoc",
-    version="0.4.0",
+    version="0.4.1",
     description="Object oriented markdown documentation",
     long_description=long_description,
     long_description_content_type="text/markdown",
